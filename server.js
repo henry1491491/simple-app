@@ -18,6 +18,14 @@ let connectionString =
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
+mongodb.connect(
+  connectionString,
+  { useNewUrlParser: true, useUnifiedTopology: true },
+  function (err, client) {
+    db = client.db();
+    app.listen(port);
+  }
+);
 
 function passwordProtected(req, res, next) {
   res.set('WWW-Authenticate', 'Basic realm="Simple Todo App"')
